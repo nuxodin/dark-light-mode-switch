@@ -3,6 +3,28 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script>
+    !function(){
+	function copyProperty(prop, from, to){
+		var desc = Object.getOwnPropertyDescriptor(from, prop);
+		Object.defineProperty(to, prop, desc);
+	}
+	if ('classList' in HTMLElement.prototype && !('classList' in Element.prototype)) {  // ie11
+		copyProperty('classList', HTMLElement.prototype, Element.prototype);
+	}
+	if ('children' in HTMLElement.prototype && !('children' in Element.prototype)) {
+		// bug, webkit, chrome, ie has not children on the prototype
+		copyProperty('children', HTMLElement.prototype, Element.prototype);
+	}
+	if ('contains' in HTMLElement.prototype && !('contains' in Element.prototype)) { // ie11
+		copyProperty('contains', HTMLElement.prototype, Element.prototype);
+	}
+	if ('getElementsByClassName' in HTMLElement.prototype && !('getElementsByClassName' in Element.prototype)) { // ie11
+		copyProperty('getElementsByClassName', HTMLElement.prototype, Element.prototype);
+	}
+}();
+
+  </script>
   <script src="https://rawcdn.githack.com/nuxodin/ie11CustomProperties/14f6b0acba054d2c693da44bd7857761d289987e/ie11CustomProperties.js"></script>
   <script>document.getElementsByTagName("html")[0].className += " js";</script>
   <link rel="stylesheet" href="assets/css/style.css">
